@@ -1,16 +1,20 @@
 import Dependencies._
 
-name := """query-monad-code"""
+organization in ThisBuild := "com.zengularity"
+
+name := """query-monad"""
 
 version := "1.0-SNAPSHOT"
 
-scalaVersion := "2.12.4"
+scalaVersion in ThisBuild := "2.12.4"
+
+crossScalaVersions in ThisBuild := Seq(scalaVersion.value)
 
 // Common values
 val commonSettings = Seq(
-  organization := "com.zengularity",
   scalaVersion := "2.12.4",
-  crossPaths := false,
+  crossScalaVersions in ThisBuild := Seq(scalaVersion.value),
+  // crossPaths := false,
   scalacOptions ++= Seq(
     "-deprecation", // Emit warning and location for usages of deprecated APIs.
     "-encoding",
@@ -64,7 +68,7 @@ wartremoverErrors ++= Warts.unsafe
 lazy val core = (project in file("core"))
   .settings(commonSettings)
   .settings(
-    name := "query-core",
+    name := "query-monad-core",
     libraryDependencies ++= Seq(
       Dependencies.acolyte % Test,
       Dependencies.anorm   % Test,
@@ -88,4 +92,19 @@ lazy val sampleAppExample = (project in file("examples/sample-app"))
 
 lazy val root: Project = project
   .in(file("."))
-  .aggregate(core, sampleAppExample)
+  .aggregate(core)
+
+// Publish configuration
+
+publishTo in ThisBuild := Some {
+  import Resolver.mavenStylePatterns
+
+  val repoDir = sys.env
+    .get("REPO_PATH")
+    .map { path =>
+      new java.io.File(path)
+    }
+    .getOrElse(sys.error("REPO_PATH is not set"))
+
+  Resolver.file("repo", repoDir)
+}
