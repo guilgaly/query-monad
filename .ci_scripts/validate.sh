@@ -2,6 +2,10 @@
 
 set -e
 
+echo "[INFO] Check the file headers"
+
+sbt ++$TRAVIS_SCALA_VERSION headerCheck test:headerCheck
+
 echo "[INFO] Check the source format"
 
 sbt ++$TRAVIS_SCALA_VERSION scalafmt test:scalafmt > /dev/null

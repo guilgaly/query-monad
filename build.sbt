@@ -6,6 +6,13 @@ ThisBuild / crossScalaVersions := Seq("2.11.12", "2.12.7")
 // Scalafmt
 ThisBuild / scalafmtOnCompile := true
 
+// sbt-header
+ThisBuild / organizationName := "Zengularity SA (FaberNovel Technologies) <https://www.zengularity.com>"
+ThisBuild / startYear := Some(2018)
+ThisBuild / licenses := Seq(
+  "MIT" -> url("https://github.com/zengularity/query-monad/blob/master/LICENSE")
+)
+
 // Wartremover
 wartremoverErrors ++= Warts.unsafe
 

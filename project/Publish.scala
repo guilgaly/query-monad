@@ -19,11 +19,6 @@ object Publish {
           .get("REPO_PATH")
           .map(path => Resolver.file("repo", new File(path)))
       },
-      licenses := Seq(
-        "MIT License" -> url(
-          "https://github.com/zengularity/query-monad/blob/master/LICENSE"
-        )
-      ),
       pomIncludeRepository := { _ =>
         false
       },
